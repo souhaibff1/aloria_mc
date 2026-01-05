@@ -1,263 +1,2055 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hells Bells | عصابة أطلس</title>
-  <link rel="icon" type="image/png" href="https://d.top4top.io/p_3640jaaqm1.png">
-  <style>
-    :root{
-      --bg:#0a0a0a;
-      --panel:#141414;
-      --red:#9b0000;
-      --red2:#c40000;
-      --text:#e6e6e6;
-      --muted:#9a9a9a;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AloriaMC - سيرفر Minecraft</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #0a192f;
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --accent-blue: #60a5fa;
+            --light-bg: #f8fafc;
+            --light-text: #1e293b;
+            --dark-bg: #0f172a;
+            --dark-text: #f1f5f9;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --transition: all 0.3s ease;
+            --border-radius: 15px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 40px -10px rgba(0, 0, 0, 0.3), 0 15px 12px -8px rgba(0, 0, 0, 0.1);
+        }
 
-    *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Tahoma,Arial,sans-serif}
-    body{background:var(--bg);color:var(--text);line-height:1.8}
-    a{text-decoration:none;color:inherit}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    nav{
-      position:fixed;top:0;right:0;left:0;
-      background:rgba(10,10,10,.9);
-      backdrop-filter:blur(6px);
-      border-bottom:1px solid #1c1c1c;
-      z-index:1000
-    }
-    .nav-wrap{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:14px 20px}
-    .logo{font-weight:900;letter-spacing:3px;color:var(--red2)}
-    .nav-links a{margin-right:18px;color:var(--muted);font-size:.95rem}
-    .nav-links a:hover{color:var(--text)}
+        body {
+            font-family: 'Cairo', 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            line-height: 1.7;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
 
-    header{
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:120px 20px 60px;
-      background:radial-gradient(circle at top, #220000 0%, #0a0a0a 60%, #050505 100%)
-    }
-    header h1{font-size:4.2rem;letter-spacing:6px;color:var(--red2)}
-    header span{display:block;margin-top:10px;color:var(--muted);letter-spacing:2px}
-    header p{max-width:720px;margin:25px auto 0;color:#cfcfcf}
+        body.light-mode {
+            background-color: var(--light-bg);
+            color: var(--light-text);
+        }
 
-    .cta{
-      margin-top:40px;display:inline-block;padding:16px 46px;
-      border-radius:50px;background:var(--red);
-      font-weight:700;transition:.25s
-    }
-    .cta:hover{background:var(--red2);transform:translateY(-2px)}
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    .atlas-btn{
-      margin-right:15px;
-      background:#111;
-      border:1px solid var(--red);
-      color:#fff
-    }
-    .atlas-btn:hover{background:var(--red);color:#fff}
+        /* RTL/LTR Support */
+        [dir="rtl"] {
+            text-align: right;
+        }
 
-    section{padding:90px 20px}
-    .container{max-width:1100px;margin:auto}
-    h2{font-size:2.6rem;margin-bottom:25px;color:var(--red2)}
-    .sub{color:var(--muted);margin-bottom:35px}
+        [dir="ltr"] {
+            text-align: left;
+        }
 
-    .panel{
-      background:var(--panel);
-      border:1px solid #1e1e1e;
-      border-radius:20px;
-      padding:35px
-    }
+        /* Header & Navigation */
+        header {
+            background-color: rgba(10, 25, 47, 0.97);
+            backdrop-filter: blur(15px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-bottom: 2px solid var(--secondary-blue);
+        }
 
-    .rules ul{list-style:none}
-    .rules li{padding:14px 0;border-bottom:1px solid #1f1f1f;color:#d0d0d0}
-    .rules li:last-child{border:none}
+        body.light-mode header {
+            background-color: rgba(248, 250, 252, 0.97);
+        }
 
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
-    .rank{
-      background:#0f0f0f;
-      border:1px solid #1f1f1f;
-      border-radius:18px;
-      padding:28px;transition:.25s
-    }
-    .rank h3{color:var(--red2);margin-bottom:10px}
-    .rank:hover{transform:translateY(-6px);border-color:var(--red)}
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
 
-    .join{text-align:center}
-    .join p{max-width:650px;margin:0 auto 30px;color:#cfcfcf}
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: var(--transition);
+        }
 
-    footer{
-      background:#050505;border-top:1px solid #1a1a1a;
-      text-align:center;padding:35px 15px;color:#777;font-size:.9rem
-    }
+        .logo:hover {
+            transform: scale(1.05);
+        }
 
-    @media(max-width:768px){
-      header h1{font-size:2.9rem}
-      h2{font-size:2.1rem}
-    }
-  </style>
+        .logo img {
+            height: 45px;
+            filter: drop-shadow(0 0 5px rgba(96, 165, 250, 0.5));
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--dark-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.light-mode .nav-links a {
+            color: var(--light-text);
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--accent-blue);
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark-text);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 10px;
+            border-radius: 50%;
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        body.light-mode .theme-toggle {
+            color: var(--light-text);
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(59, 130, 246, 0.3);
+            transform: rotate(15deg);
+        }
+
+        .language-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .language-toggle:hover {
+            background-color: var(--secondary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .flag-icon {
+            font-size: 1.3rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark-text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        body.light-mode .mobile-menu-btn {
+            color: var(--light-text);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.95) 0%, rgba(30, 58, 138, 0.85) 50%, rgba(10, 25, 47, 0.95) 100%);
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        body.light-mode .hero {
+            background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(224, 231, 255, 0.85) 50%, rgba(248, 250, 252, 0.95) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://e.top4top.io/p_3647z39up1.png') center/contain no-repeat;
+            opacity: 0.08;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .server-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .server-logo-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .server-logo {
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+            border-radius: 25px;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.3) 0%, rgba(59, 130, 246, 0.2) 100%);
+            padding: 20px;
+            border: 3px solid var(--secondary-blue);
+            box-shadow: 
+                0 0 30px rgba(59, 130, 246, 0.5),
+                inset 0 0 20px rgba(59, 130, 246, 0.2);
+            transition: var(--transition);
+        }
+
+        .server-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 0 40px rgba(59, 130, 246, 0.7),
+                inset 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .server-logo-badge {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            background-color: var(--warning);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .server-name {
+            font-size: 3.8rem;
+            color: var(--accent-blue);
+            margin-bottom: 15px;
+            text-shadow: 
+                0 2px 10px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(96, 165, 250, 0.3);
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .server-tagline {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(241, 245, 249, 0.9);
+            font-weight: 400;
+        }
+
+        body.light-mode .server-tagline {
+            color: rgba(30, 41, 59, 0.9);
+        }
+
+        .server-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .info-card {
+            background-color: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            min-width: 220px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--secondary-blue);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        body.light-mode .info-card {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .info-card h3 {
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+        }
+
+        .info-card p {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .ip-button {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: var(--border-radius);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 20px 0;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ip-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .ip-button:hover::before {
+            left: 100%;
+        }
+
+        .ip-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 20px;
+            background: linear-gradient(135deg, var(--warning) 0%, #fbbf24 100%);
+            color: #1e293b;
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .countdown {
+            margin-top: 50px;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            box-shadow: var(--shadow);
+        }
+
+        body.light-mode .countdown {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .countdown-title {
+            margin-bottom: 25px;
+            color: var(--accent-blue);
+            font-size: 1.8rem;
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            text-align: center;
+            min-width: 110px;
+            background-color: rgba(30, 41, 59, 0.7);
+            padding: 20px 10px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            background-color: rgba(30, 41, 59, 0.9);
+        }
+
+        body.light-mode .countdown-item {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .countdown-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            display: block;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            color: var(--dark-text);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        body.light-mode .countdown-label {
+            color: var(--light-text);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.8rem;
+            color: var(--accent-blue);
+            position: relative;
+            font-weight: 800;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary-blue), var(--accent-blue));
+            border-radius: 5px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.15rem;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+        }
+
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .system-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--secondary-blue);
+            backdrop-filter: blur(10px);
+        }
+
+        body.light-mode .system-card {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .system-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .system-card i {
+            font-size: 3rem;
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--secondary-blue), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .system-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        /* Rules Section */
+        .rules-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .rules-category {
+            margin-bottom: 50px;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .rules-category:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        body.light-mode .rules-category {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .rules-category h3 {
+            color: var(--accent-blue);
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+            border-right: 4px solid var(--secondary-blue);
+            padding-right: 15px;
+        }
+
+        .rules-list {
+            list-style-type: none;
+            padding-right: 20px;
+        }
+
+        .rules-list li {
+            margin-bottom: 18px;
+            padding-right: 35px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .rules-list li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+            background-color: rgba(16, 185, 129, 0.1);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        /* Team Section */
+        .team-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            padding: 50px 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+        }
+
+        body.light-mode .team-card {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .team-avatar {
+            height: 200px;
+            width: 200px;
+            border-radius: 20px;
+            object-fit: cover;
+            margin: 0 auto 25px;
+            border: 5px solid var(--secondary-blue);
+            box-shadow: 
+                0 0 30px rgba(59, 130, 246, 0.5),
+                inset 0 0 20px rgba(59, 130, 246, 0.2);
+            transition: var(--transition);
+        }
+
+        .team-card:hover .team-avatar {
+            transform: rotate(5deg);
+            box-shadow: 
+                0 0 40px rgba(59, 130, 246, 0.7),
+                inset 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .team-info {
+            padding: 20px 0 0;
+        }
+
+        .team-info h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--accent-blue);
+        }
+
+        .team-role {
+            color: var(--accent-blue);
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+            font-size: 1.3rem;
+            background-color: rgba(59, 130, 246, 0.1);
+            padding: 8px 20px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+
+        .team-responsibilities {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode .team-responsibilities {
+            border-top: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .responsibilities-list {
+            list-style-type: none;
+            padding-right: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .responsibilities-list li {
+            margin-bottom: 12px;
+            padding-right: 30px;
+            position: relative;
+            background-color: rgba(30, 41, 59, 0.3);
+            padding: 12px 15px;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        body.light-mode .responsibilities-list li {
+            background-color: rgba(241, 245, 249, 0.5);
+        }
+
+        .responsibilities-list li:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateX(5px);
+        }
+
+        .responsibilities-list li::before {
+            content: '▶';
+            position: absolute;
+            right: 10px;
+            color: var(--accent-blue);
+            font-size: 1rem;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 50px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+        }
+
+        body.light-mode .contact-container {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .discord-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #5865F2 0%, #4752c4 100%);
+            color: white;
+            text-decoration: none;
+            padding: 20px 40px;
+            border-radius: var(--border-radius);
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 30px;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discord-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .discord-btn:hover::before {
+            left: 100%;
+        }
+
+        .discord-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(88, 101, 242, 0.4);
+        }
+
+        /* Stats Section (New Feature) */
+        .stats-section {
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.9) 0%, rgba(30, 58, 138, 0.8) 100%);
+            padding: 80px 0;
+            border-radius: 0;
+        }
+
+        body.light-mode .stats-section {
+            background: linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(224, 231, 255, 0.8) 100%);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px 20px;
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode .stat-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(30, 58, 138, 0.1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-blue);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--dark-text);
+            padding: 60px 0 30px;
+            text-align: center;
+            border-top: 3px solid var(--secondary-blue);
+        }
+
+        body.light-mode footer {
+            background-color: #1e293b;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+            text-align: right;
+        }
+
+        [dir="ltr"] .footer-content {
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            color: var(--accent-blue);
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--secondary-blue);
+            border-radius: 3px;
+        }
+
+        [dir="ltr"] .footer-section h3::after {
+            right: auto;
+            left: 0;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+            display: block;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding-right: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: var(--dark-text);
+            text-decoration: none;
+            transition: var(--transition);
+            display: block;
+            padding: 8px 0;
+            position: relative;
+            padding-right: 20px;
+        }
+
+        [dir="ltr"] .footer-links a {
+            padding-right: 0;
+            padding-left: 20px;
+        }
+
+        body.light-mode .footer-links a {
+            color: var(--light-text);
+        }
+
+        .footer-links a::before {
+            content: '›';
+            position: absolute;
+            right: 0;
+            color: var(--accent-blue);
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        [dir="ltr"] .footer-links a::before {
+            right: auto;
+            left: 0;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-blue);
+            transform: translateX(-5px);
+        }
+
+        [dir="ltr"] .footer-links a:hover {
+            transform: translateX(5px);
+        }
+
+        .footer-links a:hover::before {
+            color: var(--secondary-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: flex-start;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary-blue);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .server-logo {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .server-name {
+                font-size: 3.2rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .server-name {
+                font-size: 2.8rem;
+            }
+            
+            .section-title {
+                font-size: 2.4rem;
+            }
+            
+            .server-logo {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: 0;
+                background-color: var(--primary-dark);
+                flex-direction: column;
+                width: 100%;
+                padding: 25px;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: var(--transition);
+                box-shadow: var(--shadow);
+                z-index: 999;
+                border-bottom: 2px solid var(--secondary-blue);
+            }
+
+            body.light-mode .nav-links {
+                background-color: var(--light-bg);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .server-name {
+                font-size: 2.4rem;
+            }
+
+            .server-tagline {
+                font-size: 1.2rem;
+            }
+
+            .hero {
+                padding: 130px 0 70px;
+            }
+
+            section {
+                padding: 70px 0;
+            }
+            
+            .server-logo {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .countdown-item {
+                min-width: 90px;
+                padding: 15px 5px;
+            }
+            
+            .countdown-value {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .server-name {
+                font-size: 2rem;
+            }
+            
+            .info-card {
+                min-width: 100%;
+            }
+            
+            .countdown-item {
+                min-width: 80px;
+            }
+            
+            .countdown-value {
+                font-size: 2rem;
+            }
+            
+            .server-logo {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .team-avatar {
+                height: 170px;
+                width: 170px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .contact-container,
+            .rules-category,
+            .team-card {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mt-40 {
+            margin-top: 40px;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .mb-40 {
+            margin-bottom: 40px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo">
+                    <i class="fas fa-cube"></i>
+                    <span>AloriaMC</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="#home" data-i18n="nav.home">الرئيسية</a></li>
+                    <li><a href="#about" data-i18n="nav.about">عن السيرفر</a></li>
+                    <li><a href="#rules" data-i18n="nav.rules">القوانين</a></li>
+                    <li><a href="#team" data-i18n="nav.team">فريق الإدارة</a></li>
+                    <li><a href="#contact" data-i18n="nav.contact">التواصل</a></li>
+                </ul>
+                
+                <div class="nav-buttons">
+                    <button class="theme-toggle" id="themeToggle" aria-label="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="language-toggle" id="languageToggle">
+                        <span class="flag-icon">🇩🇿</span>
+                        <span data-i18n="nav.lang">English</span>
+                    </button>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-<nav>
-  <div class="nav-wrap">
-    <div class="logo">HELLS BELLS</div>
-    <div class="nav-links">
-      <a href="#about">من نحن</a>
-      <a href="#rules">القوانين</a>
-      <a href="#ranks">الرتب</a>
-      <a href="#league">البطولات</a>
-      <a href="#join">الانضمام</a>
-    </div>
-  </div>
-</nav>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="server-header">
+                    <div class="server-logo-container">
+                        <div class="server-logo-badge" data-i18n="home.comingSoon">قريبًا</div>
+                        <img src="https://e.top4top.io/p_3647z39up1.png" alt="AloriaMC Logo" class="server-logo">
+                    </div>
+                    <h1 class="server-name">AloriaMC</h1>
+                </div>
+                
+                <p class="server-tagline" data-i18n="home.tagline">سيرفر AloriaMC هو عالم مليء بالمغامرات والتحديات، مصمم ليمنح اللاعبين تجربة ممتعة وحيوية مع الأصدقاء.</p>
+                
+                <div class="server-info">
+                    <div class="info-card">
+                        <h3 data-i18n="home.serverType">نوع السيرفر</h3>
+                        <p data-i18n="home.typeValue">Survival + Minigames</p>
+                    </div>
+                    <div class="info-card">
+                        <h3 data-i18n="home.version">إصدار ماينكرافت</h3>
+                        <p data-i18n="home.versionValue">Java & Bedrock</p>
+                    </div>
+                    <div class="info-card">
+                        <h3 data-i18n="home.status">حالة السيرفر</h3>
+                        <p data-i18n="home.statusValue">تحت الصيانة</p>
+                    </div>
+                </div>
+                
+                <button class="ip-button" id="copyIP">
+                    <i class="fas fa-copy"></i>
+                    <span data-i18n="home.copyIP">نسخ IP السيرفر</span>
+                </button>
+                
+                <div class="status-badge" data-i18n="home.maintenance">🔧 تحت الصيانة 🔧</div>
+                
+                <div class="countdown">
+                    <h3 class="countdown-title" data-i18n="home.countdown">الافتتاح الرسمي بعد:</h3>
+                    <div class="countdown-container">
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="days">03</span>
+                            <span class="countdown-label" data-i18n="home.days">أيام</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="hours">02</span>
+                            <span class="countdown-label" data-i18n="home.hours">ساعات</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="minutes">00</span>
+                            <span class="countdown-label" data-i18n="home.minutes">دقائق</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="seconds">00</span>
+                            <span class="countdown-label" data-i18n="home.seconds">ثواني</span>
+                        </div>
+                    </div>
+                    <p class="mt-20" data-i18n="home.openingDate">الخميس 8 جانفي على الساعة 7 مساءً بتوقيت الجزائر</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<header>
-  <div>
-    <h1>HELLS BELLS</h1>
-    <span>عصابة إجرامية رسمية داخل سيرفر أطلس RP</span>
-    <p>
-      عندما تدق الأجراس، لا يكون هناك صوت… بل بداية الفوضى.
-      نحن عصابة تعتمد على الهيبة، التخطيط، والانضباط الكامل بالـRP الواقعي.
-    </p>
-    <a href="https://discord.gg/pRjYxR8Hdk" target="_blank" class="cta">دخول ديسكورد العصابة</a>
-    <a href="https://atlas-rp.com/" target="_blank" class="cta atlas-btn">موقع سيرفر أطلس</a>
-  </div>
-</header>
+    <!-- Stats Section (New Feature) -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-value" id="playerCount">0+</div>
+                    <div class="stat-label" data-i18n="stats.players">لاعب متوقع</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="stat-value">5+</div>
+                    <div class="stat-label" data-i18n="stats.games">أنظمة لعب مختلفة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="stat-value" data-i18n="stats.uptime">100%</div>
+                    <div class="stat-label" data-i18n="stats.uptimeLabel">استقرار السيرفر</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-value" data-i18n="stats.community">نشط</div>
+                    <div class="stat-label" data-i18n="stats.communityLabel">مجتمع ودود</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="about">
-  <div class="container">
-    <h2>من نحن</h2>
-    <p class="sub">هوية العصابة داخل أطلس</p>
-    <div class="panel">
-      عصابة <strong>Hells Bells</strong> هي كيان إجرامي منظم داخل <strong>سيرفر أطلس RP</strong>.
-      نعمل وفق هيكل واضح، قرارات مدروسة، وسيناريوهات رسمية فقط.
-      لا نعتمد العشوائية أو التخريب، بل نركز على RP ثقيل، واقعي، يحترم القوانين العامة للسيرفر.
-    </div>
-  </div>
-</section>
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title" data-i18n="about.title">عن السيرفر</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p data-i18n="about.description1">سيرفر AloriaMC هو عالم مليء بالمغامرات والتحديات، مصمم ليمنح اللاعبين تجربة ممتعة وحيوية مع الأصدقاء. يوفر السيرفر أنظمة لعب متنوعة تجمع بين التحدي، التعاون، والمرح، مع بيئة عادلة ومجتمع نشط يرحب بالجميع.</p>
+                    <p class="mt-20" data-i18n="about.description2">نحن نؤمن بأن تجربة اللعب الجماعي هي الأفضل، لذلك صممنا أنظمة تلبي احتياجات اللاعبين سواء كانوا يحبون المغامرة والاستكشاف، أو التحدي والمنافسة، أو البناء والإبداع.</p>
+                </div>
+                
+                <div class="about-text">
+                    <h3 data-i18n="about.whyChoose">لماذا يختار اللاعبون AloriaMC؟</h3>
+                    <ul class="rules-list mt-20">
+                        <li data-i18n="about.reason1">مجتمع نشط وودود</li>
+                        <li data-i18n="about.reason2">تحديثات مستمرة وتجربة لعب متجددة</li>
+                        <li data-i18n="about.reason3">توازن في اللعب بدون ظلم</li>
+                        <li data-i18n="about.reason4">مناسب للعب الفردي والجماعي</li>
+                        <li data-i18n="about.reason5">إدارة تهتم باللاعبين</li>
+                        <li data-i18n="about.reason6">لا يوجد متجر أو عمليات دفع</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 class="text-center mt-40 mb-40" data-i18n="about.systems">أنظمة اللعب</h3>
+            
+            <div class="systems-grid">
+                <div class="system-card">
+                    <i class="fas fa-coins"></i>
+                    <h3 data-i18n="systems.economy">نظام اقتصاد متكامل</h3>
+                    <p data-i18n="systems.economyDesc">اقتصاد ديناميكي مع أسواق وتجارة بين اللاعبين</p>
+                </div>
+                <div class="system-card">
+                    <i class="fas fa-crown"></i>
+                    <h3 data-i18n="systems.ranks">نظام رتب</h3>
+                    <p data-i18n="systems.ranksDesc">رتب متعددة مع مميزات خاصة لكل رتبة</p>
+                </div>
+                <div class="system-card">
+                    <i class="fas fa-fist-raised"></i>
+                    <h3 data-i18n="systems.pvp">PvP احترافي</h3>
+                    <p data-i18n="systems.pvpDesc">مناطق PvP متوازنة مع معدات متساوية للجميع</p>
+                </div>
+                <div class="system-card">
+                    <i class="fas fa-tasks"></i>
+                    <h3 data-i18n="systems.quests">مهمات وتحديات يومية</h3>
+                    <p data-i18n="systems.questsDesc">مهمات متنوعة بمكافآت قيمة تحفز على الاستمرار</p>
+                </div>
+                <div class="system-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3 data-i18n="systems.minigames">Minigames متنوعة</h3>
+                    <p data-i18n="systems.minigamesDesc">ألعاب مصغرة ممتعة للترفيه والتحدي مع الأصدقاء</p>
+                </div>
+                <div class="system-card">
+                    <i class="fas fa-home"></i>
+                    <h3 data-i18n="systems.lands">نظام أراضي</h3>
+                    <p data-i18n="systems.landsDesc">حماية لمناطقك وبناء آمن دون تدخل</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="rules">
-  <div class="container">
-    <h2>قوانين العصابة</h2>
-    <p class="sub">أي مخالفة = محاسبة مباشرة</p>
-    <div class="panel rules">
-      <ul>
-        <li>الالتزام الكامل بالـRoleplay الواقعي داخل أطلس.</li>
-        <li>ممنوع DM / MG / PG أو استغلال أي ثغرة.</li>
-        <li>قرارات القيادة غير قابلة للنقاش داخل السيناريو.</li>
-        <li>يُمنع أي تصرف فردي يسيء لسمعة العصابة.</li>
-        <li>المشاركة فقط في السيناريوهات المعتمدة رسميًا.</li>
-      </ul>
-    </div>
-  </div>
-</section>
+    <!-- Rules Section -->
+    <section id="rules">
+        <div class="container">
+            <h2 class="section-title" data-i18n="rules.title">قوانين السيرفر</h2>
+            
+            <div class="rules-container">
+                <div class="rules-category">
+                    <h3 data-i18n="rules.general">القوانين العامة</h3>
+                    <ul class="rules-list mt-20">
+                        <li data-i18n="rules.general1">احترام جميع اللاعبين والإدارة دون استثناء</li>
+                        <li data-i18n="rules.general2">يمنع استخدام أي برامج أو أدوات غير مصرح بها (هاكات)</li>
+                        <li data-i18n="rules.general3">يمنع استغلال أي ثغرات في السيرفر والإبلاغ عنها واجب</li>
+                        <li data-i18n="rules.general4">الحفاظ على البيئة والبناء الجماعي</li>
+                        <li data-i18n="rules.general5">يمنع السرقة من المنازل والمناطق الخاصة إلا إذا كان مسموحاً في نظام اللعب</li>
+                        <li data-i18n="rules.general6">الالتزام بتعليمات الإدارة وقراراتها</li>
+                    </ul>
+                </div>
+                
+                <div class="rules-category">
+                    <h3 data-i18n="rules.pvp">قوانين PvP والشات</h3>
+                    <ul class="rules-list mt-20">
+                        <li data-i18n="rules.pvp1">يمنع التحرش أو الشتم أو الإساءة بأي شكل من الأشكال</li>
+                        <li data-i18n="rules.pvp2">يمنع التكلم في مواضيع سياسية أو دينية أو عنصرية</li>
+                        <li data-i18n="rules.pvp3">PvP مسموح فقط في المناطق المخصصة لذلك</li>
+                        <li data-i18n="rules.pvp4">يمنع قتل المبتدئين أو اللاعبين الذين لا يريدون القتال</li>
+                        <li data-i18n="rules.pvp5">الالتزام بأخلاقيات اللعب والشرف الرياضي</li>
+                        <li data-i18n="rules.pvp6">اللغة العربية هي اللغة الأساسية في الشات العام</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="ranks">
-  <div class="container">
-    <h2>الرتب القيادية</h2>
-    <p class="sub">أقوى 6 رتب داخل العصابة</p>
-    <div class="grid">
-      <div class="rank"><h3>Boss</h3><p>الزعيم الأعلى للعصابة وصاحب القرار النهائي.</p></div>
-      <div class="rank"><h3>Underboss</h3><p>الذراع الأيمن للـBoss والمشرف على كامل العمليات.</p></div>
-      <div class="rank"><h3>Leader</h3><p>قيادة العصابة ميدانيًا وتنفيذ الخطط المعتمدة.</p></div>
-      <div class="rank"><h3>Captain</h3><p>قيادة الفرق وتنظيم التحركات والمهام.</p></div>
-      <div class="rank"><h3>War Chief</h3><p>مسؤول الحروب، الاشتباكات، والرد العسكري.</p></div>
-      <div class="rank"><h3>Enforcer</h3><p>فرض الهيبة وتنفيذ الأوامر والعقوبات.</p></div>
-    </div>
-  </div>
-</section>
+    <!-- Team Section -->
+    <section id="team">
+        <div class="container">
+            <h2 class="section-title" data-i18n="team.title">فريق الإدارة</h2>
+            
+            <div class="team-container">
+                <div class="team-card">
+                    <img src="https://j.top4top.io/p_3657sqtvf1.png" alt="Souhaib" class="team-avatar">
+                    <div class="team-info">
+                        <h3>Souhaib</h3>
+                        <span class="team-role" data-i18n="team.owner">المالك (Owner)</span>
+                        <p data-i18n="team.ownerDesc">المسؤول الوحيد عن إدارة وتطوير سيرفر AloriaMC</p>
+                        
+                        <div class="team-responsibilities">
+                            <h4 data-i18n="team.responsibilities">المسؤوليات:</h4>
+                            <ul class="responsibilities-list">
+                                <li data-i18n="team.resp1">الإشراف العام على السيرفر</li>
+                                <li data-i18n="team.resp2">تطوير الأنظمة والإضافات</li>
+                                <li data-i18n="team.resp3">إدارة المجتمع واللاعبين</li>
+                                <li data-i18n="team.resp4">حل المشاكل والنزاعات</li>
+                                <li data-i18n="team.resp5">التواصل مع اللاعبين والاستماع لمقترحاتهم</li>
+                                <li data-i18n="team.resp6">ضمان تجربة لعب عادلة للجميع</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-40">
+                <p data-i18n="team.note">ملاحظة: لا يوجد متجر ولا عمليات دفع في السيرفر. الهدف هو توفير تجربة لعب عادلة للجميع.</p>
+            </div>
+        </div>
+    </section>
 
-<section id="league">
-  <div class="container">
-    <h2>البطولات (نظام دوري)</h2>
-    <p class="sub">إضافة الفرق وتعديل النقاط والمباريات</p>
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title" data-i18n="contact.title">التواصل معنا</h2>
+            
+            <div class="contact-container">
+                <p data-i18n="contact.description">للاستفسارات أو المساعدة، يمكنك الانضمام إلى سيرفر الديسكورد الخاص بنا. فريق الإدارة والمجتمع سيسعدون بمساعدتك.</p>
+                
+                <a href="https://discord.gg/T6r549uDrR" target="_blank" class="discord-btn">
+                    <i class="fab fa-discord"></i>
+                    <span data-i18n="contact.joinDiscord">انضم إلى ديسكورد</span>
+                </a>
+                
+                <p class="mt-40" data-i18n="contact.note">هذا هو وسيلة التواصل الوحيدة حاليًا. سنضطر طرق تواصل أخرى في المستقبل إذا لزم الأمر.</p>
+                
+                <div class="social-links mt-40">
+                    <a href="https://discord.gg/T6r549uDrR" target="_blank" title="Discord">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="#" title="يوتيوب (قريبًا)" id="youtubeLink">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" title="تويتر (قريبًا)" id="twitterLink">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="panel">
-      <form id="leagueForm" style="display:flex;gap:15px;margin-bottom:25px;flex-wrap:wrap">
-        <input type="text" id="teamName" placeholder="اسم الفريق" required style="flex:1;padding:12px;border-radius:10px;border:1px solid #222;background:#0f0f0f;color:#fff">
-        <button type="submit" style="padding:12px 30px;border-radius:30px;border:none;background:var(--red);color:#fff;font-weight:700">إضافة فريق</button>
-      </form>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <a href="#home" class="footer-logo">AloriaMC</a>
+                    <p data-i18n="footer.tagline">عالم من المغامرات والتحديات في ماينكرافت</p>
+                    <p class="mt-20" data-i18n="footer.motto">نحن نؤمن بتجربة لعب عادلة وممتعة للجميع</p>
+                    
+                    <div class="social-links">
+                        <a href="https://discord.gg/T6r549uDrR" target="_blank" title="Discord">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" title="يوتيوب (قريبًا)">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 data-i18n="footer.links">روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home" data-i18n="nav.home">الرئيسية</a></li>
+                        <li><a href="#about" data-i18n="nav.about">عن السيرفر</a></li>
+                        <li><a href="#rules" data-i18n="nav.rules">القوانين</a></li>
+                        <li><a href="#team" data-i18n="nav.team">فريق الإدارة</a></li>
+                        <li><a href="#contact" data-i18n="nav.contact">التواصل</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 data-i18n="footer.info">معلومات السيرفر</h3>
+                    <ul class="footer-links">
+                        <li data-i18n="home.typeValue">Survival + Minigames</li>
+                        <li data-i18n="home.versionValue">Java & Bedrock</li>
+                        <li data-i18n="home.statusValue">تحت الصيانة</li>
+                        <li data-i18n="footer.launch">ينطلق قريبًا</li>
+                        <li data-i18n="footer.noPayments">لا يوجد مدفوعات</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 AloriaMC. جميع الحقوق محفوظة. هذا السيرفر غير مرتبط بـ Mojang أو Microsoft.</p>
+                <p class="mt-20" data-i18n="footer.notice">Minecraft هو علامة تجارية لشركة Mojang Studios. نحن لسنا تابعين أو مرتبطين بـ Mojang Studios.</p>
+            </div>
+        </div>
+    </footer>
 
-      <div style="overflow-x:auto">
-        <table style="width:100%;border-collapse:collapse;text-align:center">
-          <thead>
-            <tr style="color:var(--red2);border-bottom:1px solid #222">
-              <th>#</th>
-              <th>الفريق</th>
-              <th>النقاط</th>
-              <th>المباريات</th>
-            </tr>
-          </thead>
-          <tbody id="leagueTable"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="join" class="join">
-  <div class="container">
-    <h2>الانضمام</h2>
-    <p>
-      الانضمام لعصابة Hells Bells يتطلب خبرة RP، تفاعل، والتزام كامل بالقوانين.
-      التقديم يتم حصريًا عبر ديسكورد العصابة.
-    </p>
-    <a href="https://discord.gg/pRjYxR8Hdk" target="_blank" class="cta">التقديم عبر الديسكورد</a>
-  </div>
-</section>
-
-<footer>
-  © Hells Bells — عصابة إجرامية رسمية داخل سيرفر أطلس RP
-</footer>
-
-<script>
-  const form = document.getElementById('leagueForm');
-  const table = document.getElementById('leagueTable');
-  let teams = [];
-
-  if(form){
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      const input = document.getElementById('teamName');
-      const name = input.value.trim();
-      if(!name) return;
-
-      teams.push({ name, points: 0, matches: 0 });
-      input.value = '';
-      render();
-    });
-  }
-
-  function render(){
-    // ترتيب الفرق حسب النقاط (تنازلي)
-    teams.sort((a, b) => b.points - a.points);
-
-    table.innerHTML = '';
-    teams.forEach((team, index) => {
-      const row = document.createElement('tr');
-      row.style.borderBottom = '1px solid #1f1f1f';
-
-      row.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${team.name}</td>
-        <td>
-          <input type="number" value="${team.points}"
-            style="width:80px;background:#0f0f0f;border:1px solid #222;color:#fff;border-radius:6px;text-align:center"
-            onchange="teams[${index}].points=parseInt(this.value)||0; render();">
-        </td>
-        <td>
-          <input type="number" value="${team.matches}"
-            style="width:80px;background:#0f0f0f;border:1px solid #222;color:#fff;border-radius:6px;text-align:center"
-            onchange="teams[${index}].matches=parseInt(this.value)||0">
-        </td>
-      `;
-      table.appendChild(row);
-    });
-  }
-</script>
-
+    <script>
+        // ==================== DOM Elements ====================
+        const themeToggle = document.getElementById('themeToggle');
+        const languageToggle = document.getElementById('languageToggle');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.querySelector('.nav-links');
+        const copyIPBtn = document.getElementById('copyIP');
+        const countdownDays = document.getElementById('days');
+        const countdownHours = document.getElementById('hours');
+        const countdownMinutes = document.getElementById('minutes');
+        const countdownSeconds = document.getElementById('seconds');
+        const playerCount = document.getElementById('playerCount');
+        const youtubeLink = document.getElementById('youtubeLink');
+        const twitterLink = document.getElementById('twitterLink');
+        
+        // ==================== Theme Toggle ====================
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            
+            // Change icon based on theme
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('light-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'light');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+            const icon = themeToggle.querySelector('i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+        
+        // ==================== Language Toggle ====================
+        let currentLanguage = 'ar';
+        
+        // Language translations
+        const translations = {
+            ar: {
+                // Navigation
+                'nav.home': 'الرئيسية',
+                'nav.about': 'عن السيرفر',
+                'nav.rules': 'القوانين',
+                'nav.team': 'فريق الإدارة',
+                'nav.contact': 'التواصل',
+                'nav.lang': 'English',
+                
+                // Home section
+                'home.tagline': 'سيرفر AloriaMC هو عالم مليء بالمغامرات والتحديات، مصمم ليمنح اللاعبين تجربة ممتعة وحيوية مع الأصدقاء.',
+                'home.serverType': 'نوع السيرفر',
+                'home.typeValue': 'Survival + Minigames',
+                'home.version': 'إصدار ماينكرافت',
+                'home.versionValue': 'Java & Bedrock',
+                'home.status': 'حالة السيرفر',
+                'home.statusValue': 'تحت الصيانة',
+                'home.copyIP': 'نسخ IP السيرفر',
+                'home.maintenance': '🔧 تحت الصيانة 🔧',
+                'home.countdown': 'الافتتاح الرسمي بعد:',
+                'home.days': 'أيام',
+                'home.hours': 'ساعات',
+                'home.minutes': 'دقائق',
+                'home.seconds': 'ثواني',
+                'home.openingDate': 'الخميس 8 جانفي على الساعة 7 مساءً بتوقيت الجزائر',
+                'home.comingSoon': 'قريبًا',
+                
+                // Stats section
+                'stats.players': 'لاعب متوقع',
+                'stats.games': 'أنظمة لعب مختلفة',
+                'stats.uptime': '100%',
+                'stats.uptimeLabel': 'استقرار السيرفر',
+                'stats.community': 'نشط',
+                'stats.communityLabel': 'مجتمع ودود',
+                
+                // About section
+                'about.title': 'عن السيرفر',
+                'about.description1': 'سيرفر AloriaMC هو عالم مليء بالمغامرات والتحديات، مصمم ليمنح اللاعبين تجربة ممتعة وحيوية مع الأصدقاء. يوفر السيرفر أنظمة لعب متنوعة تجمع بين التحدي، التعاون، والمرح، مع بيئة عادلة ومجتمع نشط يرحب بالجميع.',
+                'about.description2': 'نحن نؤمن بأن تجربة اللعب الجماعي هي الأفضل، لذلك صممنا أنظمة تلبي احتياجات اللاعبين سواء كانوا يحبون المغامرة والاستكشاف، أو التحدي والمنافسة، أو البناء والإبداع.',
+                'about.whyChoose': 'لماذا يختار اللاعبون AloriaMC؟',
+                'about.reason1': 'مجتمع نشط وودود',
+                'about.reason2': 'تحديثات مستمرة وتجربة لعب متجددة',
+                'about.reason3': 'توازن في اللعب بدون ظلم',
+                'about.reason4': 'مناسب للعب الفردي والجماعي',
+                'about.reason5': 'إدارة تهتم باللاعبين',
+                'about.reason6': 'لا يوجد متجر أو عمليات دفع',
+                'about.systems': 'أنظمة اللعب',
+                
+                // Systems
+                'systems.economy': 'نظام اقتصاد متكامل',
+                'systems.economyDesc': 'اقتصاد ديناميكي مع أسواق وتجارة بين اللاعبين',
+                'systems.ranks': 'نظام رتب',
+                'systems.ranksDesc': 'رتب متعددة مع مميزات خاصة لكل رتبة',
+                'systems.pvp': 'PvP احترافي',
+                'systems.pvpDesc': 'مناطق PvP متوازنة مع معدات متساوية للجميع',
+                'systems.quests': 'مهمات وتحديات يومية',
+                'systems.questsDesc': 'مهمات متنوعة بمكافآت قيمة تحفز على الاستمرار',
+                'systems.minigames': 'Minigames متنوعة',
+                'systems.minigamesDesc': 'ألعاب مصغرة ممتعة للترفيه والتحدي مع الأصدقاء',
+                'systems.lands': 'نظام أراضي',
+                'systems.landsDesc': 'حماية لمناطقك وبناء آمن دون تدخل',
+                
+                // Rules section
+                'rules.title': 'قوانين السيرفر',
+                'rules.general': 'القوانين العامة',
+                'rules.general1': 'احترام جميع اللاعبين والإدارة دون استثناء',
+                'rules.general2': 'يمنع استخدام أي برامج أو أدوات غير مصرح بها (هاكات)',
+                'rules.general3': 'يمنع استغلال أي ثغرات في السيرفر والإبلاغ عنها واجب',
+                'rules.general4': 'الحفاظ على البيئة والبناء الجماعي',
+                'rules.general5': 'يمنع السرقة من المنازل والمناطق الخاصة إلا إذا كان مسموحاً في نظام اللعب',
+                'rules.general6': 'الالتزام بتعليمات الإدارة وقراراتها',
+                'rules.pvp': 'قوانين PvP والشات',
+                'rules.pvp1': 'يمنع التحرش أو الشتم أو الإساءة بأي شكل من الأشكال',
+                'rules.pvp2': 'يمنع التكلم في مواضيع سياسية أو دينية أو عنصرية',
+                'rules.pvp3': 'PvP مسموح فقط في المناطق المخصصة لذلك',
+                'rules.pvp4': 'يمنع قتل المبتدئين أو اللاعبين الذين لا يريدون القتال',
+                'rules.pvp5': 'الالتزام بأخلاقيات اللعب والشرف الرياضي',
+                'rules.pvp6': 'اللغة العربية هي اللغة الأساسية في الشات العام',
+                
+                // Team section
+                'team.title': 'فريق الإدارة',
+                'team.owner': 'المالك (Owner)',
+                'team.ownerDesc': 'المسؤول الوحيد عن إدارة وتطوير سيرفر AloriaMC',
+                'team.responsibilities': 'المسؤوليات:',
+                'team.resp1': 'الإشراف العام على السيرفر',
+                'team.resp2': 'تطوير الأنظمة والإضافات',
+                'team.resp3': 'إدارة المجتمع واللاعبين',
+                'team.resp4': 'حل المشاكل والنزاعات',
+                'team.resp5': 'التواصل مع اللاعبين والاستماع لمقترحاتهم',
+                'team.resp6': 'ضمان تجربة لعب عادلة للجميع',
+                'team.note': 'ملاحظة: لا يوجد متجر ولا عمليات دفع في السيرفر. الهدف هو توفير تجربة لعب عادلة للجميع.',
+                
+                // Contact section
+                'contact.title': 'التواصل معنا',
+                'contact.description': 'للاستفسارات أو المساعدة، يمكنك الانضمام إلى سيرفر الديسكورد الخاص بنا. فريق الإدارة والمجتمع سيسعدون بمساعدتك.',
+                'contact.joinDiscord': 'انضم إلى ديسكورد',
+                'contact.note': 'هذا هو وسيلة التواصل الوحيدة حاليًا. سنضطر طرق تواصل أخرى في المستقبل إذا لزم الأمر.',
+                
+                // Footer
+                'footer.tagline': 'عالم من المغامرات والتحديات في ماينكرافت',
+                'footer.motto': 'نحن نؤمن بتجربة لعب عادلة وممتعة للجميع',
+                'footer.links': 'روابط سريعة',
+                'footer.info': 'معلومات السيرفر',
+                'footer.launch': 'ينطلق قريبًا',
+                'footer.noPayments': 'لا يوجد مدفوعات',
+                'footer.notice': 'Minecraft هو علامة تجارية لشركة Mojang Studios. نحن لسنا تابعين أو مرتبطين بـ Mojang Studios.'
+            },
+            en: {
+                // Navigation
+                'nav.home': 'Home',
+                'nav.about': 'About',
+                'nav.rules': 'Rules',
+                'nav.team': 'Team',
+                'nav.contact': 'Contact',
+                'nav.lang': 'العربية',
+                
+                // Home section
+                'home.tagline': 'AloriaMC is a world full of adventures and challenges, designed to give players an enjoyable and lively experience with friends.',
+                'home.serverType': 'Server Type',
+                'home.typeValue': 'Survival + Minigames',
+                'home.version': 'Minecraft Version',
+                'home.versionValue': 'Java & Bedrock',
+                'home.status': 'Server Status',
+                'home.statusValue': 'Under Maintenance',
+                'home.copyIP': 'Copy Server IP',
+                'home.maintenance': '🔧 Under Maintenance 🔧',
+                'home.countdown': 'Official Launch In:',
+                'home.days': 'Days',
+                'home.hours': 'Hours',
+                'home.minutes': 'Minutes',
+                'home.seconds': 'Seconds',
+                'home.openingDate': 'Thursday, January 8 at 7 PM Algeria Time',
+                'home.comingSoon': 'Coming Soon',
+                
+                // Stats section
+                'stats.players': 'Expected Players',
+                'stats.games': 'Different Game Systems',
+                'stats.uptime': '100%',
+                'stats.uptimeLabel': 'Server Stability',
+                'stats.community': 'Active',
+                'stats.communityLabel': 'Friendly Community',
+                
+                // About section
+                'about.title': 'About Server',
+                'about.description1': 'AloriaMC is a world full of adventures and challenges, designed to give players an enjoyable and lively experience with friends. The server provides diverse gameplay systems that combine challenge, cooperation, and fun, with a fair environment and an active community that welcomes everyone.',
+                'about.description2': 'We believe that the multiplayer gaming experience is the best, so we designed systems that meet the needs of players whether they love adventure and exploration, challenge and competition, or building and creativity.',
+                'about.whyChoose': 'Why Players Choose AloriaMC?',
+                'about.reason1': 'Active and friendly community',
+                'about.reason2': 'Continuous updates and renewed gameplay experience',
+                'about.reason3': 'Balanced gameplay without injustice',
+                'about.reason4': 'Suitable for solo and group play',
+                'about.reason5': 'Administration that cares about players',
+                'about.reason6': 'No store or payment transactions',
+                'about.systems': 'Gameplay Systems',
+                
+                // Systems
+                'systems.economy': 'Integrated Economy System',
+                'systems.economyDesc': 'Dynamic economy with markets and player trading',
+                'systems.ranks': 'Rank System',
+                'systems.ranksDesc': 'Multiple ranks with special features for each rank',
+                'systems.pvp': 'Professional PvP',
+                'systems.pvpDesc': 'Balanced PvP areas with equal equipment for all',
+                'systems.quests': 'Daily Quests & Challenges',
+                'systems.questsDesc': 'Diverse quests with valuable rewards that encourage continuity',
+                'systems.minigames': 'Various Minigames',
+                'systems.minigamesDesc': 'Fun mini-games for entertainment and challenge with friends',
+                'systems.lands': 'Land System',
+                'systems.landsDesc': 'Protection for your areas and safe building without interference',
+                
+                // Rules section
+                'rules.title': 'Server Rules',
+                'rules.general': 'General Rules',
+                'rules.general1': 'Respect all players and administration without exception',
+                'rules.general2': 'Using any unauthorized programs or tools (hacks) is prohibited',
+                'rules.general3': 'Exploiting any bugs in the server is prohibited and reporting them is mandatory',
+                'rules.general4': 'Maintaining the environment and collective building',
+                'rules.general5': 'Stealing from houses and private areas is prohibited unless permitted in the gameplay system',
+                'rules.general6': 'Compliance with administration instructions and decisions',
+                'rules.pvp': 'PvP and Chat Rules',
+                'rules.pvp1': 'Harassment, insult, or abuse in any form is prohibited',
+                'rules.pvp2': 'Talking about political, religious, or racist topics is prohibited',
+                'rules.pvp3': 'PvP is only allowed in designated areas',
+                'rules.pvp4': 'Killing beginners or players who do not want to fight is prohibited',
+                'rules.pvp5': 'Adherence to gameplay ethics and sportsmanship',
+                'rules.pvp6': 'Arabic is the main language in public chat',
+                
+                // Team section
+                'team.title': 'Administration Team',
+                'team.owner': 'Owner',
+                'team.ownerDesc': 'The sole responsible for managing and developing AloriaMC server',
+                'team.responsibilities': 'Responsibilities:',
+                'team.resp1': 'General supervision of the server',
+                'team.resp2': 'Developing systems and plugins',
+                'team.resp3': 'Managing the community and players',
+                'team.resp4': 'Solving problems and disputes',
+                'team.resp5': 'Communicating with players and listening to their suggestions',
+                'team.resp6': 'Ensuring a fair gaming experience for everyone',
+                'team.note': 'Note: There is no store and no payment transactions on the server. The goal is to provide a fair gaming experience for everyone.',
+                
+                // Contact section
+                'contact.title': 'Contact Us',
+                'contact.description': 'For inquiries or assistance, you can join our Discord server. The administration team and community will be happy to help you.',
+                'contact.joinDiscord': 'Join Discord',
+                'contact.note': 'This is the only means of communication currently. We will add other communication methods in the future if necessary.',
+                
+                // Footer
+                'footer.tagline': 'A world of adventures and challenges in Minecraft',
+                'footer.motto': 'We believe in fair and enjoyable gameplay for everyone',
+                'footer.links': 'Quick Links',
+                'footer.info': 'Server Information',
+                'footer.launch': 'Launching Soon',
+                'footer.noPayments': 'No Payments',
+                'footer.notice': 'Minecraft is a trademark of Mojang Studios. We are not affiliated with or endorsed by Mojang Studios.'
+            }
+        };
+        
+        // Function to update text based on language
+        function updateLanguage(lang) {
+            // Update HTML direction
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update flag icon on language toggle button
+            const flagIcon = languageToggle.querySelector('.flag-icon');
+            flagIcon.textContent = lang === 'ar' ? '🇺🇸' : '🇩🇿';
+            
+            // Update current language
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+        }
+        
+        // Language toggle event
+        languageToggle.addEventListener('click', () => {
+            const newLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+            updateLanguage(newLanguage);
+        });
+        
+        // Check for saved language preference
+        const savedLanguage = localStorage.getItem('language');
+        if (savedLanguage && savedLanguage !== 'ar') {
+            updateLanguage(savedLanguage);
+        }
+        
+        // ==================== Mobile Menu Toggle ====================
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
+        
+        // ==================== Copy IP Button ====================
+        copyIPBtn.addEventListener('click', () => {
+            // Create a temporary alert to show message
+            const alertBox = document.createElement('div');
+            alertBox.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+                color: white;
+                padding: 15px 25px;
+                border-radius: var(--border-radius);
+                z-index: 9999;
+                box-shadow: var(--shadow-hover);
+                font-weight: bold;
+                transition: all 0.3s ease;
+                border: 2px solid rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+            `;
+            
+            if (currentLanguage === 'ar') {
+                alertBox.textContent = 'سيتم الإعلان عن IP السيرفر قريبًا!';
+            } else {
+                alertBox.textContent = 'Server IP will be announced soon!';
+            }
+            
+            document.body.appendChild(alertBox);
+            
+            // Remove alert after 3 seconds
+            setTimeout(() => {
+                alertBox.style.opacity = '0';
+                alertBox.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    document.body.removeChild(alertBox);
+                }, 300);
+            }, 3000);
+        });
+        
+        // ==================== Countdown Timer ====================
+        // Set the launch date (3 days and 2 hours from now)
+        function calculateLaunchDate() {
+            const now = new Date();
+            // Add 3 days and 2 hours
+            const launchDate = new Date(now);
+            launchDate.setDate(now.getDate() + 3);
+            launchDate.setHours(now.getHours() + 2);
+            launchDate.setMinutes(0);
+            launchDate.setSeconds(0);
+            launchDate.setMilliseconds(0);
+            
+            return launchDate.getTime();
+        }
+        
+        let launchDate = calculateLaunchDate();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeLeft = launchDate - now;
+            
+            // If countdown is over, reset to 3 days and 2 hours
+            if (timeLeft < 0) {
+                launchDate = calculateLaunchDate();
+                return;
+            }
+            
+            // Calculate days, hours, minutes, seconds
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            // Update display
+            countdownDays.textContent = days < 10 ? '0' + days : days;
+            countdownHours.textContent = hours < 10 ? '0' + hours : hours;
+            countdownMinutes.textContent = minutes < 10 ? '0' + minutes : minutes;
+            countdownSeconds.textContent = seconds < 10 ? '0' + seconds : seconds;
+        }
+        
+        // Update countdown every second
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown(); // Initial call
+        
+        // ==================== Player Count Animation ====================
+        function animatePlayerCount() {
+            let count = 0;
+            const target = 150; // Start from 0 to 150+
+            const increment = 5;
+            const duration = 2000; // 2 seconds
+            const stepTime = duration / (target / increment);
+            
+            const timer = setInterval(() => {
+                count += increment;
+                playerCount.textContent = count + '+';
+                
+                if (count >= target) {
+                    clearInterval(timer);
+                    playerCount.textContent = target + '+';
+                }
+            }, stepTime);
+        }
+        
+        // Start animation when page loads
+        window.addEventListener('load', animatePlayerCount);
+        
+        // ==================== Social Media Links ====================
+        youtubeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const alertBox = document.createElement('div');
+            alertBox.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, #FF0000 0%, #CC0000 100%);
+                color: white;
+                padding: 15px 25px;
+                border-radius: var(--border-radius);
+                z-index: 9999;
+                box-shadow: var(--shadow-hover);
+                font-weight: bold;
+                transition: all 0.3s ease;
+                border: 2px solid rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+            `;
+            
+            if (currentLanguage === 'ar') {
+                alertBox.textContent = 'قناة اليوتيوب ستتوفر قريبًا!';
+            } else {
+                alertBox.textContent = 'YouTube channel will be available soon!';
+            }
+            
+            document.body.appendChild(alertBox);
+            
+            setTimeout(() => {
+                alertBox.style.opacity = '0';
+                alertBox.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    document.body.removeChild(alertBox);
+                }, 300);
+            }, 3000);
+        });
+        
+        twitterLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const alertBox = document.createElement('div');
+            alertBox.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, #1DA1F2 0%, #0d8bd9 100%);
+                color: white;
+                padding: 15px 25px;
+                border-radius: var(--border-radius);
+                z-index: 9999;
+                box-shadow: var(--shadow-hover);
+                font-weight: bold;
+                transition: all 0.3s ease;
+                border: 2px solid rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+            `;
+            
+            if (currentLanguage === 'ar') {
+                alertBox.textContent = 'حساب تويتر سيتوفر قريبًا!';
+            } else {
+                alertBox.textContent = 'Twitter account will be available soon!';
+            }
+            
+            document.body.appendChild(alertBox);
+            
+            setTimeout(() => {
+                alertBox.style.opacity = '0';
+                alertBox.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    document.body.removeChild(alertBox);
+                }, 300);
+            }, 3000);
+        });
+        
+        // ==================== Smooth Scrolling ====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // ==================== Scroll Animation for Sections ====================
+        // Simple fade-in animation for sections when scrolling
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(section);
+        });
+        
+        // ==================== Parallax Effect for Hero Section ====================
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.backgroundPositionY = scrolled * 0.5 + 'px';
+            }
+        });
+    </script>
 </body>
 </html>
